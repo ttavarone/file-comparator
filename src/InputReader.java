@@ -1,9 +1,7 @@
-import sun.dc.path.PathException;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
@@ -35,14 +33,14 @@ public class InputReader {
 
             int returnVal = fc.showOpenDialog(null);
             firstDocIn = fc.getSelectedFile();
-            if(returnVal == JFileChooser.CANCEL_OPTION ||
-            returnVal == JFileChooser.ERROR_OPTION) {
+            if (returnVal == JFileChooser.CANCEL_OPTION ||
+                    returnVal == JFileChooser.ERROR_OPTION) {
                 throw new FileNotSelectedException();
             }
 
             returnVal = fc.showOpenDialog(null);
             secondDocIn = fc.getSelectedFile();
-            if(returnVal == JFileChooser.CANCEL_OPTION ||
+            if (returnVal == JFileChooser.CANCEL_OPTION ||
                     returnVal == JFileChooser.ERROR_OPTION) {
                 throw new FileNotSelectedException();
             }
@@ -53,38 +51,29 @@ public class InputReader {
             Path resourcesDir = Paths.get("/TextCompare/resources/");
 
             String path = resourcesDir.toString();
-            path.concat(File.separator+firstDocName);
+            path.concat(File.separator + firstDocName);
             firstDocIn = new File(path);
 
             String path2 = resourcesDir.toString();
-            path2.concat(File.separator+secondDocName);
+            path2.concat(File.separator + secondDocName);
             secondDocIn = new File(path2);
 
 
         } catch (FileNotSelectedException fs) {
-            System.err.print("No file was selected.")
-
-        } catch (FileNotFoundException e) {
-            System.err.print("Error finding file!\n");
-            System.err.print("Please restart the program to try again.");
-        } catch (PathException p) {
-            System.err.print("Path to resources folder is invalid.");
-            //unlikely this error will be thrown until the program
-            //is completely finished and tested on a new device
+            System.err.print("No file was selected.");
         } catch (HeadlessException h) {
-            System.err.print("Headless Exception... Look it up.")
+            System.err.print("Headless Exception... Look it up.");
         }
     }
 
-}
 
     public boolean isEqual() {
-
+        return;
     }
 
     class FileNotSelectedException extends Exception {
-    public FileNotSelectedException() {
-        super();
+        public FileNotSelectedException() {
+            super();
+        }
     }
-}
 }
