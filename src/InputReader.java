@@ -2,6 +2,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
@@ -20,14 +21,14 @@ public class InputReader {
         sc2 = null;
         firstDocIn = null;
         secondDocIn = null;
-        firstDocName = new String();
-        secondDocName = new String();
+        firstDocName = "";
+        secondDocName = "";
     }
 
     /**
      * Gets files and places them in the resources folder
      */
-    public void getFiles() {
+    private void getFiles() {
         try {
             JFileChooser fc = new JFileChooser();
 
@@ -48,17 +49,6 @@ public class InputReader {
             firstDocName = firstDocIn.toString();
             secondDocName = secondDocIn.toString();
 
-            Path resourcesDir = Paths.get("/TextCompare/resources/");
-
-            String path = resourcesDir.toString();
-            path.concat(File.separator + firstDocName);
-            firstDocIn = new File(path);
-
-            String path2 = resourcesDir.toString();
-            path2.concat(File.separator + secondDocName);
-            secondDocIn = new File(path2);
-
-
         } catch (FileNotSelectedException fs) {
             System.err.print("No file was selected.");
         } catch (HeadlessException h) {
@@ -66,13 +56,41 @@ public class InputReader {
         }
     }
 
+    private void getFileInfo(File in, Scanner sc){
+        int wordCount = 0;
+        int lineCount = 0;
+        int charCount = 0;
+
+        while(sc.hasNext()){
+            wordCount++;
+            sc.next();
+        }
+
+        while(sc.hasNextLine()){
+            lineCount++;
+            sc.nextLine();
+        }
+
+        while(sc.hasNextByte()){
+            charCount++;
+            sc.nextByte();
+        }
+    }
 
     public boolean isEqual() {
-        return;
+        try {
+
+            sc1 = new Scanner(firstDocIn);
+
+
+        } catch (FileNotFoundException e) {
+            System.err.print("Input file is not available.");
+        }
+        return false;
     }
 
     class FileNotSelectedException extends Exception {
-        public FileNotSelectedException() {
+        private FileNotSelectedException() {
             super();
         }
     }
